@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/place.dart';
+import '../providers/locale_provider.dart';
 import '../widgets/search_info_card.dart';
 import '../widgets/place_info_card.dart';
+import 'package:provider/provider.dart';
 
 class PlaceDetailsScreen extends StatelessWidget {
   final PlaceResult place;
@@ -10,13 +13,17 @@ class PlaceDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeProvider = Provider.of<LocaleProvider>(context);
+    final localizations = AppLocalizations.of(context);
+    final isRtl = localeProvider.isRtl;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(place.name!),
+        title: Text(place.name ?? localizations.translate('place_details')),
         centerTitle: true,
       ),
       body: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -28,9 +35,9 @@ class PlaceDetailsScreen extends StatelessWidget {
               const SizedBox(height: 24),
 
               // عنوان معلومات البحث
-              const Text(
-                'معلومات البحث:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                localizations.translate('search_info_title'),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
 
@@ -45,8 +52,8 @@ class PlaceDetailsScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.arrow_back),
-                  label: const Text('العودة إلى نتائج البحث'),
+                  icon: Icon(isRtl ? Icons.arrow_forward : Icons.arrow_back),
+                  label: Text(localizations.translate('back_to_results')),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   ),

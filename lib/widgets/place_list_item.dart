@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/place.dart';
 
 class PlaceListItem extends StatelessWidget {
@@ -31,7 +32,7 @@ class PlaceListItem extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      place.name!,
+                      place.name ?? '',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -51,7 +52,7 @@ class PlaceListItem extends StatelessWidget {
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(
-                       place.address!,
+                      place.address ?? '',
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
@@ -64,7 +65,7 @@ class PlaceListItem extends StatelessWidget {
               const SizedBox(height: 8),
 
               // الفئات
-              if (place.types!.isNotEmpty)
+              if (place.types != null && place.types!.isNotEmpty)
                 SizedBox(
                   height: 26,
                   child: ListView(

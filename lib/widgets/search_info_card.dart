@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/place.dart';
 
 class SearchInfoCard extends StatelessWidget {
@@ -8,6 +9,8 @@ class SearchInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Card(
       elevation: 2,
       child: Padding(
@@ -15,9 +18,19 @@ class SearchInfoCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('تم العثور عليه بواسطة عدد النقاط: ${place.foundInSearchPoints}'),
+            Text(
+              localizations.translate(
+                'found_by_points_count',
+                args: {'count': '${place.foundInSearchPoints ?? 0}'},
+              ),
+            ),
             const SizedBox(height: 8),
-            Text('معرفات نقاط البحث: ${place.foundByPointIds!.join(', ')}'),
+            Text(
+              localizations.translate(
+                'search_point_ids',
+                args: {'ids': place.foundByPointIds?.join(', ') ?? ''},
+              ),
+            ),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 
 class SearchPromptCard extends StatelessWidget {
   final TextEditingController controller;
@@ -14,6 +15,8 @@ class SearchPromptCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Card(
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -22,23 +25,23 @@ class SearchPromptCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'بحث عن عيادات الأسنان',
-              style: TextStyle(
+            Text(
+              localizations.translate('search_card_title'),
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
-              'الرجاء إدخال استعلام بحث عن عيادات الأسنان في مدينة نيويورك. مثال: "ابحث عن عيادات الأسنان في نيويورك"',
-              style: TextStyle(fontSize: 14, color: Colors.grey),
+            Text(
+              localizations.translate('search_card_description'),
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),
             const SizedBox(height: 16),
             TextField(
               controller: controller,
               decoration: InputDecoration(
-                hintText: 'اكتب استعلامك هنا...',
+                hintText: localizations.translate('search_hint'),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -73,9 +76,9 @@ class SearchPromptCard extends StatelessWidget {
                     color: Colors.white,
                   ),
                 )
-                    : const Text(
-                  'بحث',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    : Text(
+                  localizations.translate('search_button'),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),

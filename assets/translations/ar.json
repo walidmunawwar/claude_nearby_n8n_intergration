@@ -16,10 +16,17 @@
   "back_to_results": "العودة إلى نتائج البحث",
   "address": "العنوان:",
   "coordinates": "الإحداثيات:",
+  "latitude": "خط العرض:",
+  "longitude": "خط الطول:",
   "categories": "الفئات:",
   "business_status": "حالة العمل:",
   "operational": "مفتوح",
   "language": "اللغة",
   "english": "الإنجليزية",
-  "arabic": "العربية"
+  "arabic": "العربية",
+  "place_info": "معلومات المكان",
+  "search_info_title": "معلومات البحث:",
+  "rating": "التقييم:",
+  "view_details": "عرض التفاصيل",
+  "place_details": "تفاصيل المكان"
 }

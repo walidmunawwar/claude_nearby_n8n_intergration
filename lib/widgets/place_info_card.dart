@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/place.dart';
 
 class PlaceInfoCard extends StatelessWidget {
@@ -8,6 +9,8 @@ class PlaceInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -23,7 +26,7 @@ class PlaceInfoCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    place.name!,
+                    place.name ?? '',
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -31,7 +34,7 @@ class PlaceInfoCard extends StatelessWidget {
                   ),
                 ),
                 if (place.rating != null)
-                  _buildRatingBadge(place.rating!),
+                  _buildRatingBadge(place.rating!, localizations),
               ],
             ),
             const SizedBox(height: 12),
@@ -39,23 +42,28 @@ class PlaceInfoCard extends StatelessWidget {
             const SizedBox(height: 8),
 
             // العنوان
-            _buildDetailRow(Icons.location_on, 'العنوان:', place.address!),
-            const SizedBox(height: 16),
-
-            // الإحداثيات
             _buildDetailRow(
-              Icons.pin_drop,
-              'الإحداثيات:',
-              ""
-              // 'خط العرض: ${place.location['lat']}, خط الطول: ${place.location['lng']}',
+              Icons.location_on,
+              localizations.translate('address'),
+              place.address ?? '',
             ),
             const SizedBox(height: 16),
 
+            // الإحداثيات
+            if (place.location != null)
+              _buildDetailRow(
+                Icons.pin_drop,
+                localizations.translate('coordinates'),
+                '${localizations.translate('latitude')} ${place.location!.lat}, ${localizations.translate('longitude')} ${place.location!.lng}',
+              ),
+            if (place.location != null)
+              const SizedBox(height: 16),
+
             // الفئات
-            if (place.types!.isNotEmpty) ...[
+            if (place.types != null && place.types!.isNotEmpty) ...[
               _buildDetailRow(
                 Icons.category,
-                'الفئات:',
+                localizations.translate('categories'),
                 place.types!.join(', '),
               ),
               const SizedBox(height: 16),
@@ -64,8 +72,10 @@ class PlaceInfoCard extends StatelessWidget {
             // حالة العمل
             _buildDetailRow(
               Icons.business,
-              'حالة العمل:',
-              place.businessStatus == 'OPERATIONAL' ? 'مفتوح' : place.businessStatus!,
+              localizations.translate('business_status'),
+              place.businessStatus == 'OPERATIONAL'
+                  ? localizations.translate('operational')
+                  : (place.businessStatus ?? ''),
             ),
           ],
         ),
@@ -73,7 +83,7 @@ class PlaceInfoCard extends StatelessWidget {
     );
   }
 
-  Widget _buildRatingBadge(double rating) {
+  Widget _buildRatingBadge(double rating, AppLocalizations localizations) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
